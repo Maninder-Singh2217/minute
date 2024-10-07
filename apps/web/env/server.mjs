@@ -1,4 +1,5 @@
 import { createEnv } from "@t3-oss/env-nextjs";
+import express from "express";
 import { z } from "zod";
 
 export const serverEnv = createEnv({
@@ -18,4 +19,12 @@ export const serverEnv = createEnv({
   experimental__runtimeEnv: {},
   skipValidation: process.env["SKIP_ENV_VALIDATION"] === "true",
   emptyStringAsUndefined: true,
+});
+
+const app = express();
+const PORT = process.env["PORT"] ?? 3000; // Use nullish coalescing operator
+
+// Ensure PORT is a string for template literal
+app.listen(Number(PORT), () => {
+  console.log(`Server is running on port ${String(PORT)}`);
 });
